@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 
 interface ItemType {
     id: number,
@@ -29,10 +29,25 @@ const COLUMN_WIDTH = 300;
 export const MasonryGrid = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [gridArrangedItems, setGridArrangedItems] = useState<ItemPositions[]>([]);
+    const [containerWidth, setContainerWidth] = useState(0);
 
     useEffect(() => {
-        generateMasonryGridLayout()
+        generateMasonryGridLayout();
     }, [])
+
+    const observerResize = useMemo(() => (
+        new ResizeObserver((entries) => {
+            setContainerWidth(Math.floor(entries[0].contentRect.width));
+        })
+    ), []);
+
+    useEffect(() => {
+        const container = containerRef.current;
+        if (container) {
+            observerResize.observe(container);
+        return () => observerResize.unobserve(container);
+        }
+    }, [observerResize]);
 
     const generateMasonryGridLayout = () => {
         if (!containerRef.current) {
@@ -47,7 +62,7 @@ export const MasonryGrid = () => {
 
         // itterate items and add next item to the smallest array in height. 
         // height is represented by a the sum of all items heights added to that column
-        mockItems.forEach((item, i) => {
+        mockItems.forEach((item) => {
             // identify smallest column
             const smallestColumnIndex = gridColumns.indexOf(Math.min(...gridColumns));
 
@@ -77,6 +92,7 @@ export const MasonryGrid = () => {
             className="masonry-grid-container"
             style={{height: '100vh', position: 'relative', overflowY: 'auto', border: '#000 solid 1px'}}
         >
+            {containerWidth}
             <div style={{ height: 'auto', position: 'relative' }}>
                 {gridArrangedItems.map((item, i) => (
                     <div
@@ -91,7 +107,7 @@ export const MasonryGrid = () => {
                             }
                         }
                         key={i}
-                    ></div>
+                    >{i}</div>
                 ))}
             </div>
             
