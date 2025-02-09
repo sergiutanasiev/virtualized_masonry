@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { MasonryGridItem } from "./MasonryGridItem";
-import { ItemType, ItemPositions } from "../types";
+import { ItemType } from "../types";
+import { useMasonryGridLayout } from "./hooks/useMasonryGridLayout";
 
 // Temp mock data
 // Generate 100 mocked items with variable height
@@ -14,19 +15,12 @@ const mockItems: ItemType[] = Array.from({length: 100},  (_: ItemType, i: number
 
 const GAP = 20;
 const COLUMN_WIDTH = 300;
-const BUFFER = 500;
 
 export const MasonryGrid = () => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [gridArrangedItems, setGridArrangedItems] = useState<ItemPositions[]>([]);
     const [containerWidth, setContainerWidth] = useState<number>(0);
-    const [contentHeight, setContentHeight] = useState<number>(0);
 
     const observerRef = useRef<IntersectionObserver | null>(null);
-
-    useEffect(() => {
-        generateMasonryGridLayout();
-    }, []);
 
     const observerResize = useMemo(() => (
         new ResizeObserver((entries) => {
@@ -47,59 +41,35 @@ export const MasonryGrid = () => {
         }
     }, [observerResize]);
 
-    const generateMasonryGridLayout = () => {
-        if (!containerRef.current) {
-            return;
-        }
-
-        // Min number of columns is 2(for mobile)
-        const numColumns = Math.max(2, Math.floor((containerRef.current.offsetWidth + GAP) / (COLUMN_WIDTH + GAP)));
-        const gridColumns = Array(numColumns).fill(0); 
-    
-        const gridArrangedItems: ItemPositions[] = [];
-
-        // itterate items and add next item to the smallest array in height. 
-        // height is represented by a the sum of all items heights added to that column
-        mockItems.forEach((item) => {
-            // identify smallest column
-            const smallestColumnIndex = gridColumns.indexOf(Math.min(...gridColumns));
-
-            //x pos ex for col2: 1 * (300 + 20); x is 320px
-            const x = smallestColumnIndex * (COLUMN_WIDTH + GAP);
-            //y pos is current col height + gap
-            const y = gridColumns[smallestColumnIndex] + (gridColumns[smallestColumnIndex] > 0 ? GAP : 0);
-
-            // update column height
-            gridColumns[smallestColumnIndex] = y + item.height;
-
-            gridArrangedItems.push(
-                {
-                    width:COLUMN_WIDTH,
-                    height:item.height,
-                    x: x,
-                    y: y
-                }
-            )
-        });
-        setContentHeight(Math.max(...gridColumns));
-        setGridArrangedItems(gridArrangedItems);
-    }
+    const {gridArrangedItems, contentHeight} = useMasonryGridLayout(
+        mockItems,
+        COLUMN_WIDTH,
+        GAP,
+        containerWidth
+    )
 
     return (
         <div 
             ref={containerRef}
             className="masonry-grid-container"
-            style={{height: '100vh', position: 'relative', overflowY: 'auto', border: '#000 solid 1px'}}
+            style={
+                {
+                    height: '100vh', 
+                    position: 'relative', 
+                    overflowY: 'auto', 
+                    border: '#000 solid 1px'
+                }
+            }
         >
-            
-            
-                {gridArrangedItems.map((_, index) => (
+            <div style={{ height: contentHeight, position: 'relative' }}>
+                {gridArrangedItems.map((_, index: number) => (
                     <MasonryGridItem
                         key={index}
                         item={mockItems[index]}
                         position={gridArrangedItems[index]}
                     />
                 ))}
+            </div>
         </div>
     )
 }
