@@ -1,17 +1,6 @@
-import { useEffect, useRef, useState, useMemo } from "react";
-
-interface ItemType {
-    id: number,
-    height: number,
-    content: string
-}
-
-interface ItemPositions {
-    width: number,
-    height: number,
-    x: number,
-    y: number
-}
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { MasonryGridItem } from "./MasonryGridItem";
+import { ItemType, ItemPositions } from "../types";
 
 // Temp mock data
 // Generate 100 mocked items with variable height
@@ -25,15 +14,19 @@ const mockItems: ItemType[] = Array.from({length: 100},  (_: ItemType, i: number
 
 const GAP = 20;
 const COLUMN_WIDTH = 300;
+const BUFFER = 500;
 
 export const MasonryGrid = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const [gridArrangedItems, setGridArrangedItems] = useState<ItemPositions[]>([]);
-    const [containerWidth, setContainerWidth] = useState(0);
+    const [containerWidth, setContainerWidth] = useState<number>(0);
+    const [contentHeight, setContentHeight] = useState<number>(0);
+
+    const observerRef = useRef<IntersectionObserver | null>(null);
 
     useEffect(() => {
         generateMasonryGridLayout();
-    }, [])
+    }, []);
 
     const observerResize = useMemo(() => (
         new ResizeObserver((entries) => {
@@ -43,9 +36,14 @@ export const MasonryGrid = () => {
 
     useEffect(() => {
         const container = containerRef.current;
+        
         if (container) {
             observerResize.observe(container);
-        return () => observerResize.unobserve(container);
+
+            return () => {
+                observerResize.unobserve(container);
+                observerRef.current?.disconnect();
+            }
         }
     }, [observerResize]);
 
@@ -83,6 +81,7 @@ export const MasonryGrid = () => {
                 }
             )
         });
+        setContentHeight(Math.max(...gridColumns));
         setGridArrangedItems(gridArrangedItems);
     }
 
@@ -92,25 +91,15 @@ export const MasonryGrid = () => {
             className="masonry-grid-container"
             style={{height: '100vh', position: 'relative', overflowY: 'auto', border: '#000 solid 1px'}}
         >
-            {containerWidth}
-            <div style={{ height: 'auto', position: 'relative' }}>
-                {gridArrangedItems.map((item, i) => (
-                    <div
-                        style={
-                            {
-                                height: `${item.height}px`,
-                                width: `${COLUMN_WIDTH}px`,
-                                position: 'absolute',
-                                transform: `translate(${item.x}px,
-                                ${item.y}px)`,
-                                border: '#000 solid 1px',
-                            }
-                        }
-                        key={i}
-                    >{i}</div>
-                ))}
-            </div>
             
+            
+                {gridArrangedItems.map((_, index) => (
+                    <MasonryGridItem
+                        key={index}
+                        item={mockItems[index]}
+                        position={gridArrangedItems[index]}
+                    />
+                ))}
         </div>
     )
 }
