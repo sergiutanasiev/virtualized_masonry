@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import { MasonryGridItem } from "./MasonryGridItem";
 import { ItemType } from "../types";
 import { useMasonryGridLayout } from "./hooks/useMasonryGridLayout";
@@ -17,7 +17,7 @@ const GAP = 20;
 const COLUMN_WIDTH = 300;
 
 export const MasonryGrid = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerWidth, setContainerWidth] = useState<number>(0);
 
     const observerRef = useRef<IntersectionObserver | null>(null);
@@ -46,7 +46,7 @@ export const MasonryGrid = () => {
         COLUMN_WIDTH,
         GAP,
         containerWidth
-    )
+    );
 
     return (
         <div 

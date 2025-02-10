@@ -1,9 +1,15 @@
-import { memo } from "react"
+import { memo, useRef, useEffect } from "react"
 import { MasonryGridItemProps } from "../types"
 
-export const MasonryGridItem = memo(({item, position }: MasonryGridItemProps) => {
+export const MasonryGridItem = memo(({item, position, observe }: MasonryGridItemProps) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+    }, [observe]);
+
     return (
         <div
+            ref={ref}
             style={
                     {
                         height: `${position.height}px`,

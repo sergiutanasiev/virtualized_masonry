@@ -1,6 +1,6 @@
 import { Layout } from './Layout';
 import './App.css';
-import { MasonryGrid } from '../features/masonry-grid/components/MasonryGrid';
+import { MasonryGrid } from '../features/masonry-grid/components/MasonryGrid'
 
 export default function App() {
 

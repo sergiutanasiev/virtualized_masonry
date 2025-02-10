@@ -36,6 +36,7 @@ export const useMasonryGridLayout = (
 
             gridArrangedItems.push(
                 {
+                    id: item.id,
                     width:columnWidth,
                     height:item.height,
                     x: x,

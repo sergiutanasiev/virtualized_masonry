@@ -5,6 +5,7 @@ export interface ItemType {
 }
 
 export interface ItemPositions {
+    id: number,
     width: number,
     height: number,
     x: number,
@@ -13,5 +14,6 @@ export interface ItemPositions {
 
 export interface MasonryGridItemProps {
     item: ItemType,
-    position: ItemPositions
+    position: ItemPositions,
+    observe?: (element: HTMLElement | null) => void
 }
