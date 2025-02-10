@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      "@": path.resolve(__dirname, "src/"),
       "@masonry": path.resolve(__dirname, "src/features/masonry-grid/"),
       "@app": path.resolve(__dirname, "src/app"),
       "@api": path.resolve(__dirname, "src/api"),
