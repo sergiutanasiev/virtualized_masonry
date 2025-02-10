@@ -11,7 +11,8 @@ export default defineConfig({
       "@masonry": path.resolve(__dirname, "src/features/masonry-grid/"),
       "@app": path.resolve(__dirname, "src/app"),
       "@api": path.resolve(__dirname, "src/api"),
-      "@providers": path.resolve(__dirname, "src/providers")
+      "@providers": path.resolve(__dirname, "src/providers"),
+      "@utils": path.resolve(__dirname, "src/utils/")
     },
   },
 });

@@ -11,7 +11,8 @@
       "@app/*": ["app/*"],
       "@api/*": ["api/*"],
       "@masonry/*": ["features/masonry-grid/*"],
-      "@providers/*": ["providers/*"]
+      "@providers/*": ["providers/*"],
+      "@utils/*": ["utils/*"]
     }
   }
 }
