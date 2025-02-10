@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, use } from "react";
 import { MasonryGridItem } from "@masonry/components/MasonryGridItem";
 import { ItemType } from "@masonry/types"
 import { useMasonryGridLayout } from "@masonry/components/hooks/useMasonryGridLayout";
+import { throttle } from "@utils/throttle";
+import { getColumnWidthandGap } from "@/config/masonryConfig";
 
 // Temp mock data
 // Generate 100 mocked items with variable height
@@ -16,13 +18,22 @@ const mockItems: ItemType[] = Array.from({length: 100},  (_: ItemType, i: number
 export const MasonryGrid = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerWidth, setContainerWidth] = useState<number>(0);
+    const [columnWidth, setColumnWidth] = useState(0);
+    const [gap, setGap] = useState(0);
 
     const observerRef = useRef<IntersectionObserver | null>(null);
 
     const observerResize = useMemo(() => (
-        new ResizeObserver((entries) => {
-            setContainerWidth(Math.floor(entries[0].contentRect.width));
-        })
+        
+        new ResizeObserver(
+            throttle((entries: any) => {
+                const currentScreenWidth = Math.floor(entries[0].contentRect.width);
+                const {columnWidth, gap} = getColumnWidthandGap(currentScreenWidth)
+                setContainerWidth(currentScreenWidth);
+                setColumnWidth(columnWidth);
+                setGap(gap)
+            }, 500)
+        )
     ), []);
 
     useEffect(() => {
@@ -40,8 +51,8 @@ export const MasonryGrid = () => {
 
     const {gridArrangedItems, contentHeight} = useMasonryGridLayout(
         mockItems,
-        COLUMN_WIDTH,
-        GAP,
+        columnWidth,
+        gap,
         containerWidth
     );
 
@@ -63,6 +74,7 @@ export const MasonryGrid = () => {
                     <MasonryGridItem
                         key={index}
                         item={mockItems[index]}
+                        width={columnWidth}
                         position={gridArrangedItems[index]}
                     />
                 ))}

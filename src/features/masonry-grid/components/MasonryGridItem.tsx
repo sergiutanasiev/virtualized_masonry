@@ -1,7 +1,7 @@
 import { memo, useRef, useEffect } from "react"
 import { MasonryGridItemProps } from "@masonry/types"
 
-export const MasonryGridItem = memo(({item, position, observe }: MasonryGridItemProps) => {
+export const MasonryGridItem = memo(({item, width, position, observe }: MasonryGridItemProps) => {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -13,7 +13,7 @@ export const MasonryGridItem = memo(({item, position, observe }: MasonryGridItem
             style={
                     {
                         height: `${position.height}px`,
-                        width: `300px`,
+                        width: `${width}px`,
                         position: 'absolute',
                         transform: `translate(${position.x}px,
                         ${position.y}px)`,

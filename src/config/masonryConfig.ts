@@ -42,10 +42,10 @@ export function getCurrentBreakpoint(screenWidth: number): Breakpoint  {
     return "largeDesktop";
 }
 
-export function getColumnWidth(screenWidth: number): number {
+export function getColumnWidthandGap(screenWidth: number): Record<string, number>{
     const index = getCurrentBreakpoint(screenWidth);
     const { columns, gap } = breakpointsList[index];
     const totalGapSpace = gap * (columns - 1);
     const columnWidth = (screenWidth - totalGapSpace) / columns;
-    return columnWidth;
+    return {columnWidth, gap};
 }
