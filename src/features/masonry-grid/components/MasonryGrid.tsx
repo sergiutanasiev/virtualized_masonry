@@ -13,9 +13,6 @@ const mockItems: ItemType[] = Array.from({length: 100},  (_: ItemType, i: number
     }
 });
 
-const GAP = 20;
-const COLUMN_WIDTH = 300;
-
 export const MasonryGrid = () => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [containerWidth, setContainerWidth] = useState<number>(0);
