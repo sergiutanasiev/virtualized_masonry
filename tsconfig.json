@@ -5,7 +5,12 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "jsx": "react-jsx"
-    // ... other options
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@api/*": ["api/*"],
+      "@masonry/*": ["features/masonry-grid/*"],
+      "@providers/*": ["providers/*"]
+    }
   }
 }

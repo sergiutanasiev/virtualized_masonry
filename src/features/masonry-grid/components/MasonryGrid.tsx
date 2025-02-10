@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
-import { MasonryGridItem } from "./MasonryGridItem";
-import { ItemType } from "../types";
-import { useMasonryGridLayout } from "./hooks/useMasonryGridLayout";
+import { MasonryGridItem } from "@masonry/components/MasonryGridItem";
+import { ItemType } from "@masonry/types"
+import { useMasonryGridLayout } from "@masonry/components/hooks/useMasonryGridLayout";
 
 // Temp mock data
 // Generate 100 mocked items with variable height
