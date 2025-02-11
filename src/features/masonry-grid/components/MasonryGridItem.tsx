@@ -1,27 +1,34 @@
 import { memo, useRef, useEffect } from "react"
 import { MasonryGridItemProps } from "@masonry/types"
 
-export const MasonryGridItem = memo(({item, width, position, observe }: MasonryGridItemProps) => {
+export const MasonryGridItem = memo(({
+    id, 
+    src, 
+    alt,
+    positions,
+}: MasonryGridItemProps) => {
     const ref = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-    }, [observe]);
-
+  
     return (
-        <div
-            ref={ref}
-            style={
-                    {
-                        height: `${position.height}px`,
-                        width: `${width}px`,
-                        position: 'absolute',
-                        transform: `translate(${position.x}px,
-                        ${position.y}px)`,
-                        border: '#000 solid 1px',
-                    }
-                }    
-        >
-            {item.content}
-        </div>
-    )
+      <div
+        ref={ref}
+        style={{
+          position: "absolute",
+          transform: `translate(${positions.x}px, ${positions.y}px)`,
+          width: `${positions.width}`,
+          height: `${positions.height}`,
+        }}
+      >
+        <img
+          src={src}
+          alt={alt}
+          style={{ 
+            width: `${positions.width}px`, 
+            height: `${positions.height}px`, 
+            objectFit: "cover",
+            borderRadius: 8
+          }}
+        />
+      </div>
+    );
 })

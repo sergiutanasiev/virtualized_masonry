@@ -6,7 +6,7 @@ const BASE_URL = API_CONFIG.PEXEL.PEXEL_BASE_URL;
 export const fetchImages = async(query: string) => {
     console.log(API_KEY, BASE_URL, query);
     try {
-        const response = await fetch(`${BASE_URL}${query}`, {
+        const response = await fetch(`${BASE_URL}search?query=art&per_page=${query}`, {
             headers: {
                 Authorization: API_KEY
             }

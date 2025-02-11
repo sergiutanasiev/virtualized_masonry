@@ -2,27 +2,22 @@ import { useCallback, useMemo } from "react"
 import { ItemType, ItemPositions } from "@masonry/types"
 
 export const useMasonryGridLayout = (
-    items: ItemType[],
+    photos: unknown | undefined,
     columnWidth: number,
-    gap: number,
-    containerWidth: number
+    columns: number,
+    gap: number
 ) => {
     const generateLayout = useCallback(() => {
-        if (!containerWidth) {
-            return {
-                gridArrangedItems: [], contentHeight: 0
-            }
-        }
-
-        // Min number of columns is 2(for mobile)
-        const numColumns = Math.max(2, Math.floor((containerWidth + gap) / (columnWidth + gap)));
-        const gridColumns = Array(numColumns).fill(0); 
+        
+        const gridColumns = Array(columns).fill(0);
     
         const gridArrangedItems: ItemPositions[] = [];
 
         // itterate items and add next item to the smallest array in height. 
         // height is represented by a the sum of all items heights added to that column
-        items.forEach((item) => {
+        photos.forEach((photo: any) => {
+            const resizedHeight = Math.floor((photo.width / photo.height) * columnWidth);
+
             // identify smallest column
             const smallestColumnIndex = gridColumns.indexOf(Math.min(...gridColumns));
 
@@ -32,13 +27,14 @@ export const useMasonryGridLayout = (
             const y = gridColumns[smallestColumnIndex] + (gridColumns[smallestColumnIndex] > 0 ? gap : 0);
 
             // update column height
-            gridColumns[smallestColumnIndex] = y + item.height;
+            gridColumns[smallestColumnIndex] = y + resizedHeight;
+            
 
             gridArrangedItems.push(
                 {
-                    id: item.id,
+                    id: photo.id,
                     width:columnWidth,
-                    height:item.height,
+                    height:resizedHeight,
                     x: x,
                     y: y
                 }
@@ -46,11 +42,10 @@ export const useMasonryGridLayout = (
         });
 
         return {
-            gridArrangedItems,
-            contentHeight: Math.max(...gridColumns)
+            gridArrangedItems
         }
 
-    }, [items, columnWidth, gap, containerWidth]);
+    }, [photos, columnWidth, columns, gap]);
 
     return useMemo(() => generateLayout(), [generateLayout]);
 }
