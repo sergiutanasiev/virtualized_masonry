@@ -1,12 +1,12 @@
-import { Layout } from '@app/Layout';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './routes/root';
+import { Suspense } from 'react';
 import './App.css';
-import { MasonryGrid } from '@masonry/components/MasonryGrid';
 
 export default function App() {
-
-  return (
-    <Layout>
-        <MasonryGrid />
-    </Layout>
-  )
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RouterProvider router={router} />
+        </Suspense>
+    );
 }

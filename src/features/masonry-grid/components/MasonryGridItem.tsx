@@ -1,12 +1,11 @@
-import { memo, useRef, useEffect } from "react"
-import { MasonryGridItemProps } from "@masonry/types"
+import { memo, useRef } from "react"
 
 export const MasonryGridItem = memo(({
     id, 
     src, 
     alt,
     positions,
-}: MasonryGridItemProps) => {
+}: Record<any, any>) => {
     const ref = useRef<HTMLDivElement>(null);
   
     return (

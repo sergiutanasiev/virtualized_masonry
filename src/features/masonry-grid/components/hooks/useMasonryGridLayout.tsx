@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react"
-import { ItemType, ItemPositions } from "@masonry/types"
+import { ItemType, ItemPositions } from "../../types"
 
 export const useMasonryGridLayout = (
     photos: unknown | undefined,

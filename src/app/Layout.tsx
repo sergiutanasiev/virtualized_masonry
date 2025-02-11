@@ -1,13 +1,17 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 interface LayoutProps {
-    children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-export const Layout = ({children}: LayoutProps) => (
-    <div className='wrapper'>
-        <main className='main'>
+const Layout = ({ children }: LayoutProps) => (
+    <div className="wrapper">
+        <main className="main">
             {children}
+            <Outlet />
         </main>
     </div>
-)
+);
+
+export default Layout;
