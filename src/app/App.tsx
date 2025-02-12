@@ -1,5 +1,5 @@
 import { RouterProvider } from 'react-router-dom';
-import { router } from './routes/root';
+import { router } from '../routes/root';
 import { Suspense } from 'react';
 import './App.css';
 

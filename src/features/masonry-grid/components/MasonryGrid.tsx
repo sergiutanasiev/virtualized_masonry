@@ -88,8 +88,9 @@ const MasonryGrid = memo(() => {
             return (
                 <MasonryGridItem
                 key={photo.id}
+                photo={photo}
                 id={photo.id}
-                src={photo.src.tiny}
+                src={photo.src.medium}
                 alt={photo.alt}
                 set={[photo.src]}
                 positions={pos}
