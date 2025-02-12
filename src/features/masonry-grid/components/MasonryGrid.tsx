@@ -103,7 +103,7 @@ const MasonryGrid = memo(() => {
 
     return (
         <GridContainer ref={containerRef}>
-            <InnerContainer ref={setRef} contentHeight={contentHeight}>
+            <InnerContainer ref={setRef} $contentHeight={contentHeight}>
                 {visibleItems.map((itemIndex: number) => {
                 const photo = photos[itemIndex];
                 const pos = gridArrangedItems[itemIndex];
