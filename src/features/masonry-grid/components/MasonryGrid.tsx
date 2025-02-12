@@ -5,6 +5,7 @@ import { useMasonryGridLayout } from "../hooks/useMasonryGridLayout";
 import { useVisibleGridItems } from "../hooks/useVisibleGridItems";
 import { useFetchMasonryItems } from "../../../api/hooks/useFetchMasonryItems";
 import { debounce } from "../../../utils/debounce";
+import { GridContainer, InnerContainer, LoadingText } from "../../../styled-components/StyledMasonryGrid";
 
 /**
  * Component containing the Virtualized Masonry Grid
@@ -33,10 +34,6 @@ const MasonryGrid = memo(() => {
     }, [data]);
 
     const photos = useMemo(() => items?.photos || [], [items?.photos]);
-
-    const { columnWidth, columns, gap, viewportBuffer } = getColumnWidthandGap(containerWidth);
-
-    const { gridArrangedItems, contentHeight } = useMasonryGridLayout(photos, columnWidth, columns, gap);
 
     // Debounce function to handle component update between screen resize
     const debouncedSetWidth = useMemo(() => 
@@ -87,6 +84,10 @@ const MasonryGrid = memo(() => {
 
     }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+    const { columnWidth, columns, gap, viewportBuffer } = getColumnWidthandGap(containerWidth);
+
+    const { gridArrangedItems, contentHeight } = useMasonryGridLayout(photos, columnWidth, columns, gap);
+
     const containerHeight = containerRef.current ? containerRef.current.clientHeight : window.innerHeight;
 
     // Get a collection of the current visible items that should be rendered in the DOM
@@ -101,30 +102,22 @@ const MasonryGrid = memo(() => {
     if (isError) return <div>Error loading items</div>;
 
     return (
-        <div
-        ref={containerRef}
-        className="masonry-grid-container"
-        style={{
-            position: "relative",
-            overflowY: "auto",
-            height: "100vh",
-        }}
-        >
-        <div ref={setRef} style={{ height: `${contentHeight}px` }}>
-            {visibleItems.map((itemIndex: number) => {
-            const photo = photos[itemIndex];
-            const pos = gridArrangedItems[itemIndex];
-            return (
-                <MasonryGridItem
-                key={photo.id}
-                photo={photo}
-                positions={pos}
-                />
-            );
-            })}
-        </div>
-        {isFetchingNextPage && <div>Loading more photos...</div>}
-        </div>
+        <GridContainer ref={containerRef}>
+            <InnerContainer ref={setRef} contentHeight={contentHeight}>
+                {visibleItems.map((itemIndex: number) => {
+                const photo = photos[itemIndex];
+                const pos = gridArrangedItems[itemIndex];
+                return (
+                    <MasonryGridItem
+                    key={photo.id}
+                    photo={photo}
+                    positions={pos}
+                    />
+                );
+                })}
+            </InnerContainer>
+            {(isFetchingNextPage) && <LoadingText>Loading more photos...</LoadingText>}
+        </GridContainer>
     );
 });
 
