@@ -42,7 +42,7 @@ export const useMasonryGridLayout = (
         });
 
         return {
-            gridArrangedItems
+            gridArrangedItems, contentHeight: Math.max(...gridColumns)
         }
 
     }, [photos, columnWidth, columns, gap]);

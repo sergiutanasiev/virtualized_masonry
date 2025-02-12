@@ -6,6 +6,8 @@ export interface BreakpointType {
     gap: number
 }
 
+const viewportBuffer: number = 250;
+
 export const breakpointsList: Record<Breakpoint, BreakpointType> = {
     mobile: {
         breakpoint: 480,
@@ -43,10 +45,9 @@ export function getCurrentBreakpoint(screenWidth: number): Breakpoint  {
 }
 
 export function getColumnWidthandGap(screenWidth: number): Record<string, number>{
-    console.log(screenWidth);
     const index = getCurrentBreakpoint(screenWidth);
     const { columns, gap } = breakpointsList[index];
     const totalGapSpace = gap * (columns - 1);
     const columnWidth = (screenWidth - totalGapSpace) / columns;
-    return {columnWidth, columns, gap};
+    return {columnWidth, columns, gap, viewportBuffer};
 }
