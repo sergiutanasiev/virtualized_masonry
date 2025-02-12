@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { PhotoType } from "../features/masonry-grid/types";
 import { ItemDetauilsContainer, LinkButton } from "../styled-components/StyledMasonryGrid";
 
