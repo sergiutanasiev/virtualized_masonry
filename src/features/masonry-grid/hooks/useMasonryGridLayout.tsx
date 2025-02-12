@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react"
-import { ItemType, ItemPositions } from "../../types"
+import { ItemPositions, PhotoType } from "../types"
 
 export const useMasonryGridLayout = (
-    photos: unknown | undefined,
+    photos: PhotoType[],
     columnWidth: number,
     columns: number,
     gap: number
@@ -15,16 +15,16 @@ export const useMasonryGridLayout = (
 
         // itterate items and add next item to the smallest array in height. 
         // height is represented by a the sum of all items heights added to that column
-        photos.forEach((photo: any) => {
-            const resizedHeight = Math.floor((photo.width / photo.height) * columnWidth);
+        photos.forEach((photo: PhotoType) => {
+            const resizedHeight: number = Math.floor((photo.width / photo.height) * columnWidth);
 
             // identify smallest column
-            const smallestColumnIndex = gridColumns.indexOf(Math.min(...gridColumns));
+            const smallestColumnIndex: number = gridColumns.indexOf(Math.min(...gridColumns));
 
             //x pos ex for col2: 1 * (300 + 20); x is 320px
-            const x = smallestColumnIndex * (columnWidth + gap);
+            const x: number = smallestColumnIndex * (columnWidth + gap);
             //y pos is current col height + gap
-            const y = gridColumns[smallestColumnIndex] + (gridColumns[smallestColumnIndex] > 0 ? gap : 0);
+            const y: number = gridColumns[smallestColumnIndex] + (gridColumns[smallestColumnIndex] > 0 ? gap : 0);
 
             // update column height
             gridColumns[smallestColumnIndex] = y + resizedHeight;

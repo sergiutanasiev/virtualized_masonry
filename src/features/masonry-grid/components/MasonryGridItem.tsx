@@ -1,13 +1,14 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
+import { ItemPositions, PhotoType } from "../types";
 
 export const MasonryGridItem = memo(({
     photo,
-    id, 
-    src, 
-    alt,
     positions,
-}: Record<any, any>) => {
+}: {
+    photo: PhotoType,
+    positions: ItemPositions
+}) => {
 
     return (
       <div
@@ -18,10 +19,10 @@ export const MasonryGridItem = memo(({
           height: `${positions.height}`,
         }}
       >
-        <Link to={`/items/${id}`} state={photo} className="masonry-item-link">
+        <Link to={`/items/${photo.id}`} state={photo} className="masonry-item-link">
             <img
-                src={src}
-                alt={alt}
+                src={photo.src.tiny}
+                alt={photo.alt}
                 style={{ 
                     width: `${positions.width}px`, 
                     height: `${positions.height}px`, 

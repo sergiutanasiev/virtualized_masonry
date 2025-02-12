@@ -1,14 +1,14 @@
 import { useMemo, useState, memo, useCallback, useEffect, useRef } from "react";
 import { MasonryGridItem } from "./MasonryGridItem";
 import { getColumnWidthandGap } from "../../../config/masonryConfig";
-import { useMasonryGridLayout } from "./hooks/useMasonryGridLayout";
-import { useVisibleGridItems } from "./hooks/useVisibleGridItems";
+import { useMasonryGridLayout } from "../hooks/useMasonryGridLayout";
+import { useVisibleGridItems } from "../hooks/useVisibleGridItems";
 import { useFetchMasonryItems } from "../../../api/hooks/useFetchMasonryItems";
 
 const MasonryGrid = memo(() => {
-    const [containerWidth, setContainerWidth] = useState(0);
+    const [containerWidth, setContainerWidth] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement | null>(null);
-    const [scrollTop, setScrollTop] = useState(0);
+    const [scrollTop, setScrollTop] = useState<number>(0);
 
     const {
         data,
@@ -40,7 +40,6 @@ const MasonryGrid = memo(() => {
     }, []);
 
     useEffect(() => {
-        console.log(hasNextPage);
     const container = containerRef.current;
 
         if (!container) {
@@ -58,6 +57,7 @@ const MasonryGrid = memo(() => {
 
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
+        
     }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     const containerHeight = containerRef.current ? containerRef.current.clientHeight : window.innerHeight;
@@ -90,12 +90,7 @@ const MasonryGrid = memo(() => {
                 <MasonryGridItem
                 key={photo.id}
                 photo={photo}
-                id={photo.id}
-                src={photo.src.medium}
-                alt={photo.alt}
-                set={[photo.src]}
                 positions={pos}
-                columnWidth={columnWidth}
                 />
             );
             })}

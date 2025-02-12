@@ -1,9 +1,10 @@
 import { Link, useLocation, useParams } from "react-router-dom";
+import { PhotoType } from "../features/masonry-grid/types";
 
 const ItemDetails = () => {
   const location = useLocation();
   const { itemId } = useParams();
-  const photo = location.state;
+  const photo: PhotoType = location.state;
 
   if (!photo) {
     return <div>Error: No photo data found for item {itemId}</div>;

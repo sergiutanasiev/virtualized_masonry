@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Suspense, ReactNode } from 'react';
+import {  ReactNode } from 'react';
 import { ErrorBoundary } from './ErrorBoundary';
 
 interface AppProvidersProps {
