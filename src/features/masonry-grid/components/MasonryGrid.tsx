@@ -55,6 +55,7 @@ const MasonryGrid = memo(() => {
                 }
             }
         };
+
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
     }, [hasNextPage, isFetchingNextPage, fetchNextPage]);

@@ -5,8 +5,6 @@ const ItemDetails = () => {
   const { itemId } = useParams();
   const photo = location.state;
 
-  console.log(photo, location.state)
-
   if (!photo) {
     return <div>Error: No photo data found for item {itemId}</div>;
   }

@@ -1,4 +1,4 @@
-import { memo, useRef } from "react";
+import { memo } from "react";
 import { Link } from "react-router-dom";
 
 export const MasonryGridItem = memo(({
@@ -8,10 +8,9 @@ export const MasonryGridItem = memo(({
     alt,
     positions,
 }: Record<any, any>) => {
-    const ref = useRef<HTMLDivElement>(null);
+
     return (
       <div
-        ref={ref}
         style={{
           position: "absolute",
           transform: `translate(${positions.x}px, ${positions.y}px)`,
