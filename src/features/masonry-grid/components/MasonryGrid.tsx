@@ -4,17 +4,18 @@ import { getColumnWidthandGap } from "../../../config/masonryConfig";
 import { useMasonryGridLayout } from "../hooks/useMasonryGridLayout";
 import { useVisibleGridItems } from "../hooks/useVisibleGridItems";
 import { useFetchMasonryItems } from "../../../api/hooks/useFetchMasonryItems";
+import { debounce } from "../../../utils/debounce";
 
 /**
  * Component containing the Virtualized Masonry Grid
- * Observing the screen width and reduce number of columns
- * Observing scrollTop position to trigger fetching more items
+ * Responsible for rendering the masonry grid
  */
 const MasonryGrid = memo(() => {
     const [containerWidth, setContainerWidth] = useState<number>(0);
-    const containerRef = useRef<HTMLDivElement | null>(null);
     const [scrollTop, setScrollTop] = useState<number>(0);
-
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const isInitialLoad = useRef(true);
+    
     const {
         data,
         isLoading,
@@ -35,14 +36,30 @@ const MasonryGrid = memo(() => {
 
     const { gridArrangedItems, contentHeight } = useMasonryGridLayout(photos, columnWidth, columns, gap);
 
-    const setRef = useCallback((node: HTMLDivElement | null) => {
+    const debouncedSetWidth = useMemo(() => 
+        debounce((width: number) => {
+          setContainerWidth(width);
+        }, 200
+    ), []);
+    
+    const setRef = useCallback(
+    (node: HTMLDivElement | null) => {
         if (node !== null) {
-        const observer = new ResizeObserver((entries) => {
-            setContainerWidth(Math.floor(entries[0].contentRect.width));
-        });
-        observer.observe(node);
+
+            const observer = new ResizeObserver((entries) => {
+            const newWidth = Math.floor(entries[0].contentRect.width);
+
+            if (isInitialLoad.current) {
+                setContainerWidth(newWidth);
+                isInitialLoad.current = false;
+            } else {
+                debouncedSetWidth(newWidth);
+            }
+            });
+            
+            observer.observe(node);
         }
-    }, []);
+    }, [debouncedSetWidth]);
 
     useEffect(() => {
     const container = containerRef.current;
