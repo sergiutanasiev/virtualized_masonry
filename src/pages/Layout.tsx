@@ -1,17 +1,18 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import { Wrapper } from '../styled-components/StyledMasonryGrid';
 
 interface LayoutProps {
   children?: React.ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => (
-    <div className="wrapper">
+    <Wrapper>
         <main className="main">
             {children}
             <Outlet />
         </main>
-    </div>
+    </Wrapper>
 );
 
 export default Layout;

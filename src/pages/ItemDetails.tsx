@@ -1,5 +1,6 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { PhotoType } from "../features/masonry-grid/types";
+import { ItemDetauilsContainer, LinkButton } from "../styled-components/StyledMasonryGrid";
 
 /**
  * Custom component to render the detail page of a photo
@@ -14,14 +15,14 @@ const ItemDetails = () => {
   }
 
   return (
-    <div>
-        <Link to={"/"}>
+    <ItemDetauilsContainer>
+        <LinkButton to={"/"}>
             Back
-        </Link>
+        </LinkButton>
         <h2>{photo.alt}</h2>
         <img src={photo.src.large} alt={photo.alt} style={{ maxWidth: "100%" }} />
         <p>Photographer: {photo.photographer}</p>
-    </div>
+    </ItemDetauilsContainer>
   );
 };
 

@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const Wrapper = styled.div`
+    margin: 0 auto;
+    text-align: center;
+`
+
 export const GridContainer = styled.div`
     position: relative;
     overflow-y: auto;
@@ -49,3 +54,7 @@ export const LinkButton = styled(Link)`
     cursor: pointer;
     text-decoration: none;
 `;
+
+export const ItemDetauilsContainer = styled.div`
+    padding: 20px;
+`
