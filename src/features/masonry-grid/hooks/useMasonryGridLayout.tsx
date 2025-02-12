@@ -20,12 +20,12 @@ export const useMasonryGridLayout = (
     
         const gridArrangedItems: ItemPositions[] = [];
 
-        // itterate items and add next item to the smallest array in height. 
-        // height is represented by a the sum of all items heights added to that column
+        // Itterate items and add next item to the smallest array in height. 
+        // Height is represented by a the sum of all items heights added to that column
         photos.forEach((photo: PhotoType) => {
             const resizedHeight: number = Math.floor((photo.width / photo.height) * columnWidth);
 
-            // identify smallest column
+            // Identify smallest column
             const smallestColumnIndex: number = gridColumns.indexOf(Math.min(...gridColumns));
 
             //x pos ex for col2: 1 * (300 + 20); x is 320px
@@ -33,7 +33,7 @@ export const useMasonryGridLayout = (
             //y pos is current col height + gap
             const y: number = gridColumns[smallestColumnIndex] + (gridColumns[smallestColumnIndex] > 0 ? gap : 0);
 
-            // update column height
+            // Update column height
             gridColumns[smallestColumnIndex] = y + resizedHeight;
             
 

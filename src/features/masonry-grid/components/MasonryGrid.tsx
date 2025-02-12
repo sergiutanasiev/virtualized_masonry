@@ -16,6 +16,7 @@ const MasonryGrid = memo(() => {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const isInitialLoad = useRef(true);
     
+    // Custom hook for api request for photos
     const {
         data,
         isLoading,
@@ -25,6 +26,7 @@ const MasonryGrid = memo(() => {
         isFetchingNextPage,
     } = useFetchMasonryItems("art");
 
+    // Flatten pages in a single photo array 
     const items = useMemo(() => {
         if (!data) return null;
         return { photos: data.pages.flatMap(page => page.photos) };
@@ -36,12 +38,14 @@ const MasonryGrid = memo(() => {
 
     const { gridArrangedItems, contentHeight } = useMasonryGridLayout(photos, columnWidth, columns, gap);
 
+    // Debounce function to handle component update between screen resize
     const debouncedSetWidth = useMemo(() => 
         debounce((width: number) => {
           setContainerWidth(width);
         }, 200
     ), []);
     
+    // Callback ref to measure container width
     const setRef = useCallback(
     (node: HTMLDivElement | null) => {
         if (node !== null) {
@@ -56,11 +60,12 @@ const MasonryGrid = memo(() => {
                 debouncedSetWidth(newWidth);
             }
             });
-            
+
             observer.observe(node);
         }
     }, [debouncedSetWidth]);
 
+    // Track scrolling
     useEffect(() => {
     const container = containerRef.current;
 
@@ -84,6 +89,7 @@ const MasonryGrid = memo(() => {
 
     const containerHeight = containerRef.current ? containerRef.current.clientHeight : window.innerHeight;
 
+    // Get a collection of the current visible items that should be rendered in the DOM
     const visibleItems = useVisibleGridItems({
         gridArrangedItems,
         scrollTop,
