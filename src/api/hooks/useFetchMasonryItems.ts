@@ -2,6 +2,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { fetchImages } from "../services/fetchImages";
 import { PexelRequestReponse } from "../../features/masonry-grid/types";
 
+/**
+ * Custom hook to fetch photos from the Pexels API
+ * @param {string} query - Search query for images (ex: art)
+ * @returns {Object} Infinite query object with flattened photos array
+ */
 export const useFetchMasonryItems = (query: string) => {
     const infiniteQuery = useInfiniteQuery<PexelRequestReponse>({
 		queryKey: ["masonryItems", query],

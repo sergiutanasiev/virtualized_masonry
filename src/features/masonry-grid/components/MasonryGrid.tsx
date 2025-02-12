@@ -5,6 +5,11 @@ import { useMasonryGridLayout } from "../hooks/useMasonryGridLayout";
 import { useVisibleGridItems } from "../hooks/useVisibleGridItems";
 import { useFetchMasonryItems } from "../../../api/hooks/useFetchMasonryItems";
 
+/**
+ * Component containing the Virtualized Masonry Grid
+ * Observing the screen width and reduce number of columns
+ * Observing scrollTop position to trigger fetching more items
+ */
 const MasonryGrid = memo(() => {
     const [containerWidth, setContainerWidth] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement | null>(null);
@@ -57,7 +62,7 @@ const MasonryGrid = memo(() => {
 
         container.addEventListener("scroll", handleScroll);
         return () => container.removeEventListener("scroll", handleScroll);
-        
+
     }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
     const containerHeight = containerRef.current ? containerRef.current.clientHeight : window.innerHeight;

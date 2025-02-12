@@ -1,6 +1,9 @@
 import { Link, useLocation, useParams } from "react-router-dom";
 import { PhotoType } from "../features/masonry-grid/types";
 
+/**
+ * Custom component to render the detail page of a photo
+ */
 const ItemDetails = () => {
   const location = useLocation();
   const { itemId } = useParams();

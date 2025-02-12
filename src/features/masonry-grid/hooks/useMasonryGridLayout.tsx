@@ -1,6 +1,13 @@
 import { useCallback, useMemo } from "react"
 import { ItemPositions, PhotoType } from "../types"
 
+/**
+ * Custom Hook responsible for generating the number of columns and item positions in the grid
+ * @param {PhotoType[]} photos - Array containing a collection of items received from fetch request
+ * @param {number} columnWidth - Width of a column for current screen size
+ * @param {number} columns - Number of columns for current screen size
+ * @param {number} gap - Size of the gap between columns and items in a grid, based on the current screen size
+ */
 export const useMasonryGridLayout = (
     photos: PhotoType[],
     columnWidth: number,

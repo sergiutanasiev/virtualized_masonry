@@ -2,6 +2,11 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { ItemPositions, PhotoType } from "../types";
 
+/**
+ * Component containing the Virtualized Masonry Grid ITEM
+ * @param {PhotoType} photo - Object containing the photo values
+ * @param {ItemPositions} positions - Object containing (width, height, x, y) position of item in the grid
+ */
 export const MasonryGridItem = memo(({
     photo,
     positions,

@@ -31,6 +31,11 @@ export const breakpointsList: Record<Breakpoint, BreakpointType> = {
     }
 }
 
+/**
+ * Function to calculate the type of current screen width
+ * @param {number} screenWidth - Current screen width
+ * @returns {string} a string, key of the breakpoint for breakPointList
+ */
 export function getCurrentBreakpoint(screenWidth: number): Breakpoint  {
     if (screenWidth <= breakpointsList.mobile.breakpoint) {
         return "mobile"
@@ -44,6 +49,11 @@ export function getCurrentBreakpoint(screenWidth: number): Breakpoint  {
     return "largeDesktop";
 }
 
+/**
+ * Function to calculate the width of the column
+ * @param {number} screenWidth - Current screen width
+ * @returns {Object} width Column width, number of columns, gap size, viewport buffer
+ */
 export function getColumnWidthandGap(screenWidth: number): Record<string, number>{
     const index = getCurrentBreakpoint(screenWidth);
     const { columns, gap } = breakpointsList[index];
