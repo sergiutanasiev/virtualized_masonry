@@ -16,7 +16,6 @@ export const useVisibleGridItems = ({
                 visibleItems.push(index);
             }
         });
-        console.log(gridArrangedItems)
         return visibleItems;
     }, [gridArrangedItems, scrollTop, containerHeight, viewportBuffer]); 
 }

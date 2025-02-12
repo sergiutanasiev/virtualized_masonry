@@ -6,7 +6,7 @@ export interface BreakpointType {
     gap: number
 }
 
-const viewportBuffer: number = 250;
+const viewportBuffer: number = 200;
 
 export const breakpointsList: Record<Breakpoint, BreakpointType> = {
     mobile: {

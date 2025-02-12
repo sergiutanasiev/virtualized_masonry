@@ -3,9 +3,9 @@ import { API_CONFIG } from "../../config/apiConfig";
 const API_KEY = API_CONFIG.PEXEL.PEXEL_API_KEY;
 const BASE_URL = API_CONFIG.PEXEL.PEXEL_BASE_URL;
 
-export const fetchImages = async(query: string) => {
+export const fetchImages = async(query: string, page: number) => {
     try {
-        const response = await fetch(`${BASE_URL}search?query=art&per_page=${query}`, {
+        const response = await fetch(`${BASE_URL}search?query=${query}&per_page=40&page=${page}`, {
             headers: {
                 Authorization: API_KEY
             }
