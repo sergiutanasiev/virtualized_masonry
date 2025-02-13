@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { ItemPositions, PhotoType } from "../types";
+import { GridItem } from "../../../styled-components/StyledMasonryGrid";
 
 /**
  * Component containing the Virtualized Masonry Grid ITEM
@@ -16,14 +17,7 @@ export const MasonryGridItem = memo(({
 }) => {
 
     return (
-      <div
-        style={{
-          position: "absolute",
-          transform: `translate(${positions.x}px, ${positions.y}px)`,
-          width: `${positions.width}`,
-          height: `${positions.height}`,
-        }}
-      >
+      <GridItem x={positions.x} y={positions.y} width={positions.width} height={positions.height}>
         <Link to={`/items/${photo.id}`} state={photo} className="masonry-item-link">
             <img
                 src={photo.src.small}
@@ -41,7 +35,6 @@ export const MasonryGridItem = memo(({
                 }}
             />
         </Link>
-        
-      </div>
+      </GridItem>
     );
 })
