@@ -26,7 +26,7 @@ export const MasonryGridItem = memo(({
       >
         <Link to={`/items/${photo.id}`} state={photo} className="masonry-item-link">
             <img
-                src={photo.src.medium}
+                src={photo.src.small}
                 alt={photo.alt}
                 srcSet={`
                   ${photo.src.tiny} 280w,
