@@ -24,8 +24,10 @@ Simple virtualized masonry grid
 
 Short description
 
-Grid and columns is generated via a config file based on screen breakpoints
-Items are added to columns based on smallest column height to ensure masonry layout
+Grid and columns are generated via a config file based on screen breakpoints
+
+Items are added to columns based on smallest column height to ensure masonry layout.
+
 Virtualization is ensuder by checking which current items are intersecting the masonry container, only intersected items will be rendered to the DOM.
 
 Optimization is done by debouncing the window resize and scroll events to reduce component rerenders.
